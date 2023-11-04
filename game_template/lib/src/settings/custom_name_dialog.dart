@@ -10,8 +10,7 @@ import 'settings.dart';
 void showCustomNameDialog(BuildContext context) {
   showGeneralDialog(
       context: context,
-      pageBuilder: (context, animation, secondaryAnimation) =>
-          CustomNameDialog(animation: animation));
+      pageBuilder: (context, animation, secondaryAnimation) => CustomNameDialog(animation: animation));
 }
 
 class CustomNameDialog extends StatefulWidget {
@@ -34,7 +33,10 @@ class _CustomNameDialogState extends State<CustomNameDialog> {
         curve: Curves.easeOutCubic,
       ),
       child: SimpleDialog(
-        title: const Text('Change name'),
+        title: Text(
+          'Сменить имя',
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
         children: [
           TextField(
             controller: _controller,
@@ -54,7 +56,10 @@ class _CustomNameDialogState extends State<CustomNameDialog> {
           ),
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
+            child: Text(
+              'Закрыть',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
           ),
         ],
       ),

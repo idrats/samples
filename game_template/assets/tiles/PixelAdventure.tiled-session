@@ -1,0 +1,48 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "level-1.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 1.6419,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 306.65692185882216,
+                "y": 164.44363237712406
+            }
+        },
+        "level-2.tmx": {
+            "scale": 1.435390625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 406.5095520600882,
+                "y": 184.6187340118652
+            }
+        }
+    },
+    "last.imagePath": "/Users/idrats/Documents/pet_projects/game/samples/game_template/assets/images/Terrain",
+    "map.height": 23,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 40,
+    "openFiles": [
+    ],
+    "project": "PixelAdventure.tiled-project",
+    "property.type": "float",
+    "recentFiles": [
+        "level-2.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}

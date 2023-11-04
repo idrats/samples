@@ -3,6 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:game_template/src/pixel_adventure/pixel_adventure_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -30,9 +31,7 @@ class LevelSelectionScreen extends StatelessWidget {
               padding: EdgeInsets.all(16),
               child: Center(
                 child: Text(
-                  'Select level',
-                  style:
-                      TextStyle(fontFamily: 'Permanent Marker', fontSize: 30),
+                  'Выбор уровня',
                 ),
               ),
             ),
@@ -40,20 +39,39 @@ class LevelSelectionScreen extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
+                  ListTile(
+                    onTap: () {
+                      GoRouter.of(context).go('/play/${PixelAdventurePage.routeName}');
+                    },
+                    title: Text('Пиксельное приключение', style: Theme.of(context).textTheme.bodySmall),
+                  ),
                   for (final level in gameLevels)
                     ListTile(
-                      enabled: playerProgress.highestLevelReached >=
-                          level.number - 1,
+                      enabled: playerProgress.highestLevelReached >= level.number - 1,
                       onTap: () {
                         final audioController = context.read<AudioController>();
                         audioController.playSfx(SfxType.buttonTap);
 
-                        GoRouter.of(context)
-                            .go('/play/session/${level.number}');
+                        GoRouter.of(context).go('/play/session/${level.number}');
                       },
-                      leading: Text(level.number.toString()),
-                      title: Text('Level #${level.number}'),
-                    )
+                      leading: Text(
+                        '${level.number}.',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              fontSize: 20,
+                              color: playerProgress.highestLevelReached >= level.number - 1
+                                  ? palette.ink
+                                  : palette.ink.withOpacity(.5),
+                            ),
+                      ),
+                      title: Text(
+                        'Уровень #${level.number}',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: playerProgress.highestLevelReached >= level.number - 1
+                                  ? palette.ink
+                                  : palette.ink.withOpacity(.5),
+                            ),
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -63,7 +81,10 @@ class LevelSelectionScreen extends StatelessWidget {
           onPressed: () {
             GoRouter.of(context).go('/');
           },
-          child: const Text('Back'),
+          child: Text(
+            'Назад',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: palette.trueWhite),
+          ),
         ),
       ),
     );

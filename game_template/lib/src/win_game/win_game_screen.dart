@@ -24,8 +24,7 @@ class WinGameScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final adsControllerAvailable = context.watch<AdsController?>() != null;
-    final adsRemoved =
-        context.watch<InAppPurchaseController?>()?.adRemoval.active ?? false;
+    final adsRemoved = context.watch<InAppPurchaseController?>()?.adRemoval.active ?? false;
     final palette = context.watch<Palette>();
 
     const gap = SizedBox(height: 10);
@@ -44,19 +43,17 @@ class WinGameScreen extends StatelessWidget {
               ),
             ],
             gap,
-            const Center(
+            Center(
               child: Text(
-                'You won!',
-                style: TextStyle(fontFamily: 'Permanent Marker', fontSize: 50),
+                'Вы Выиграли!',
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
             gap,
             Center(
               child: Text(
-                'Score: ${score.score}\n'
-                'Time: ${score.formattedTime}',
-                style: const TextStyle(
-                    fontFamily: 'Permanent Marker', fontSize: 20),
+                'Счет: ${score.score}\n'
+                'Время: ${score.formattedTime}',
               ),
             ),
           ],
@@ -65,7 +62,10 @@ class WinGameScreen extends StatelessWidget {
           onPressed: () {
             GoRouter.of(context).go('/play');
           },
-          child: const Text('Continue'),
+          child: Text(
+            'Продолжить',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: palette.trueWhite),
+          ),
         ),
       ),
     );

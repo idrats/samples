@@ -2,12 +2,12 @@ name: game_template
 description: A mobile game built in Flutter.
 
 # Prevent accidental publishing to pub.dev.
-publish_to: 'none'
+publish_to: "none"
 
 version: 0.0.1+1
 
 environment:
-  sdk: ^3.1.0
+  sdk: ^3.0.5
 
 dependencies:
   flutter:
@@ -23,11 +23,13 @@ dependencies:
   # If you don't need one of the following dependencies,
   # delete the relevant line below, and get rid of any Dart code
   # that references the dependency.
-  firebase_core: ^2.1.1  # Needed for Crashlytics below
-  firebase_crashlytics: ^3.3.5  # Error reporting
-  games_services: ^3.0.0  # Achievements and leaderboards
-  google_mobile_ads: ^3.0.0  # Ads
-  in_app_purchase: ^3.0.1  # In-app purchases
+  firebase_core: ^2.1.1 # Needed for Crashlytics below
+  firebase_crashlytics: ^3.3.5 # Error reporting
+  games_services: ^3.0.0 # Achievements and leaderboards
+  google_mobile_ads: ^3.0.0 # Ads
+  in_app_purchase: ^3.0.1 # In-app purchases
+  flame: ^1.10.1
+  flame_tiled: ^1.15.1
 
 dev_dependencies:
   flutter_lints: ^3.0.0
@@ -40,14 +42,27 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/images/Terrain/
+    - assets/images/buttons/
+    - assets/images/Background/
+    - assets/images/Items/Checkpoints/Checkpoint/
+    - assets/images/Items/Fruits/
+    - assets/images/Traps/Saw/
+    - assets/images/Main Characters/
+    - assets/images/Main Characters/Mask Dude/
+    - assets/images/Main Characters/Ninja Frog/
+    - assets/images/Main Characters/Pink Man/
+    - assets/images/Main Characters/Virtual Guy/
     - assets/images/
     - assets/music/
     - assets/sfx/
+    - assets/fonts/
+    - assets/tiles/
 
   fonts:
-    - family: Permanent Marker
+    - family: Vasek
       fonts:
-        - asset: assets/Permanent_Marker/PermanentMarker-Regular.ttf
+        - asset: assets/fonts/Vasek.ttf
 
 flutter_icons:
   android: true

@@ -45,9 +45,8 @@ class AudioController {
   AudioController({int polyphony = 2})
       : assert(polyphony >= 1),
         _musicPlayer = AudioPlayer(playerId: 'musicPlayer'),
-        _sfxPlayers = Iterable.generate(
-                polyphony, (i) => AudioPlayer(playerId: 'sfxPlayer#$i'))
-            .toList(growable: false),
+        _sfxPlayers =
+            Iterable.generate(polyphony, (i) => AudioPlayer(playerId: 'sfxPlayer#$i')).toList(growable: false),
         _playlist = Queue.of(List<Song>.of(songs)..shuffle()) {
     _musicPlayer.onPlayerComplete.listen(_changeSong);
   }
@@ -55,8 +54,7 @@ class AudioController {
   /// Enables the [AudioController] to listen to [AppLifecycleState] events,
   /// and therefore do things like stopping playback when the game
   /// goes into the background.
-  void attachLifecycleNotifier(
-      ValueNotifier<AppLifecycleState> lifecycleNotifier) {
+  void attachLifecycleNotifier(ValueNotifier<AppLifecycleState> lifecycleNotifier) {
     _lifecycleNotifier?.removeListener(_handleAppLifecycle);
 
     lifecycleNotifier.addListener(_handleAppLifecycle);
@@ -108,10 +106,7 @@ class AudioController {
     // This assumes there is only a limited number of sound effects in the game.
     // If there are hundreds of long sound effect files, it's better
     // to be more selective when preloading.
-    await AudioCache.instance.loadAll(SfxType.values
-        .expand(soundTypeToFilename)
-        .map((path) => 'sfx/$path')
-        .toList());
+    await AudioCache.instance.loadAll(SfxType.values.expand(soundTypeToFilename).map((path) => 'sfx/$path').toList());
   }
 
   /// Plays a single sound effect, defined by [type].
@@ -127,8 +122,7 @@ class AudioController {
     }
     final soundsOn = _settings?.soundsOn.value ?? false;
     if (!soundsOn) {
-      _log.info(() =>
-          'Ignoring playing sound ($type) because sounds are turned off.');
+      _log.info(() => 'Ignoring playing sound ($type) because sounds are turned off.');
       return;
     }
 
@@ -138,8 +132,7 @@ class AudioController {
     _log.info(() => '- Chosen filename: $filename');
 
     final currentPlayer = _sfxPlayers[_currentSfxPlayer];
-    currentPlayer.play(AssetSource('sfx/$filename'),
-        volume: soundTypeToVolume(type));
+    currentPlayer.play(AssetSource('sfx/$filename'), volume: soundTypeToVolume(type));
     _currentSfxPlayer = (_currentSfxPlayer + 1) % _sfxPlayers.length;
   }
 

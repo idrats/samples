@@ -2,7 +2,11 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'dart:math';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:game_template/src/splashes/splashes.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -25,74 +29,95 @@ class MainMenuScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: palette.backgroundMain,
-      body: ResponsiveScreen(
-        mainAreaProminence: 0.45,
-        squarishMainArea: Center(
-          child: Transform.rotate(
-            angle: -0.1,
-            child: const Text(
-              'Flutter Game Template!',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Permanent Marker',
-                fontSize: 55,
-                height: 1,
+      body: Stack(children: [
+        Image.asset(
+          splashes[Random().nextInt(splashes.length)],
+          height: MediaQuery.sizeOf(context).height,
+          width: MediaQuery.sizeOf(context).width,
+          fit: BoxFit.cover,
+        ),
+        ResponsiveScreen(
+          mainAreaProminence: 0.1,
+          topMessageArea: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(16)),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 25, sigmaY: 25),
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                child: Text(
+                  'Привет, друг!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 80,
+                    height: 1,
+                    color: palette.backgroundMain,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-        rectangularMenuArea: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            FilledButton(
-              onPressed: () {
-                audioController.playSfx(SfxType.buttonTap);
-                GoRouter.of(context).go('/play');
-              },
-              child: const Text('Play'),
-            ),
-            _gap,
-            if (gamesServicesController != null) ...[
-              _hideUntilReady(
-                ready: gamesServicesController.signedIn,
-                child: FilledButton(
-                  onPressed: () => gamesServicesController.showAchievements(),
-                  child: const Text('Achievements'),
+          squarishMainArea: SizedBox.shrink(),
+          rectangularMenuArea: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              FilledButton(
+                onPressed: () {
+                  audioController.playSfx(SfxType.buttonTap);
+                  GoRouter.of(context).go('/play');
+                },
+                child: const Text(
+                  'Играть',
+                  style: TextStyle(fontSize: 40),
                 ),
               ),
               _gap,
-              _hideUntilReady(
-                ready: gamesServicesController.signedIn,
-                child: FilledButton(
-                  onPressed: () => gamesServicesController.showLeaderboard(),
-                  child: const Text('Leaderboard'),
+              if (gamesServicesController != null) ...[
+                _hideUntilReady(
+                  ready: gamesServicesController.signedIn,
+                  child: FilledButton(
+                    onPressed: () => gamesServicesController.showAchievements(),
+                    child: const Text('Достижения'),
+                  ),
+                ),
+                _gap,
+                _hideUntilReady(
+                  ready: gamesServicesController.signedIn,
+                  child: FilledButton(
+                    onPressed: () => gamesServicesController.showLeaderboard(),
+                    child: const Text('Рейтинг'),
+                  ),
+                ),
+                _gap,
+              ],
+              FilledButton(
+                onPressed: () => GoRouter.of(context).push('/settings'),
+                child: const Text(
+                  'Настройки',
+                  style: TextStyle(fontSize: 40),
+                ),
+              ),
+              _gap,
+              Padding(
+                padding: const EdgeInsets.only(top: 32),
+                child: ValueListenableBuilder<bool>(
+                  valueListenable: settingsController.muted,
+                  builder: (context, muted, child) {
+                    return IconButton(
+                      onPressed: () => settingsController.toggleMuted(),
+                      icon: Icon(
+                        muted ? Icons.volume_off : Icons.volume_up,
+                        color: palette.backgroundMain,
+                      ),
+                    );
+                  },
                 ),
               ),
               _gap,
             ],
-            FilledButton(
-              onPressed: () => GoRouter.of(context).push('/settings'),
-              child: const Text('Settings'),
-            ),
-            _gap,
-            Padding(
-              padding: const EdgeInsets.only(top: 32),
-              child: ValueListenableBuilder<bool>(
-                valueListenable: settingsController.muted,
-                builder: (context, muted, child) {
-                  return IconButton(
-                    onPressed: () => settingsController.toggleMuted(),
-                    icon: Icon(muted ? Icons.volume_off : Icons.volume_up),
-                  );
-                },
-              ),
-            ),
-            _gap,
-            const Text('Music by Mr Smith'),
-            _gap,
-          ],
+          ),
         ),
-      ),
+      ]),
     );
   }
 

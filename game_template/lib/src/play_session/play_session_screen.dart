@@ -76,15 +76,20 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                       ),
                     ),
                     const Spacer(),
-                    Text('Drag the slider to ${widget.level.difficulty}%'
-                        ' or above!'),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: Text(
+                        'Переместите ползунок на значение ${widget.level.difficulty}%'
+                        ' или выше!',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
                     Consumer<LevelState>(
                       builder: (context, levelState, child) => Slider(
-                        label: 'Level Progress',
+                        label: 'Прогресс уровня',
                         autofocus: true,
                         value: levelState.progress / 100,
-                        onChanged: (value) =>
-                            levelState.setProgress((value * 100).round()),
+                        onChanged: (value) => levelState.setProgress((value * 100).round()),
                         onChangeEnd: (value) => levelState.evaluate(),
                       ),
                     ),
@@ -95,7 +100,10 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                         width: double.infinity,
                         child: FilledButton(
                           onPressed: () => GoRouter.of(context).go('/play'),
-                          child: const Text('Back'),
+                          child: Text(
+                            'Назад',
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: palette.trueWhite),
+                          ),
                         ),
                       ),
                     ),
@@ -126,8 +134,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
     _startOfPlay = DateTime.now();
 
     // Preload ad for the win screen.
-    final adsRemoved =
-        context.read<InAppPurchaseController?>()?.adRemoval.active ?? false;
+    final adsRemoved = context.read<InAppPurchaseController?>()?.adRemoval.active ?? false;
     if (!adsRemoved) {
       final adsController = context.read<AdsController?>();
       adsController?.preloadAd();

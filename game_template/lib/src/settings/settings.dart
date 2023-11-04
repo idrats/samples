@@ -15,15 +15,14 @@ class SettingsController {
   /// and sound.
   ValueNotifier<bool> muted = ValueNotifier(false);
 
-  ValueNotifier<String> playerName = ValueNotifier('Player');
+  ValueNotifier<String> playerName = ValueNotifier('Имя игрока');
 
   ValueNotifier<bool> soundsOn = ValueNotifier(false);
 
   ValueNotifier<bool> musicOn = ValueNotifier(false);
 
   /// Creates a new instance of [SettingsController] backed by [persistence].
-  SettingsController({required SettingsPersistence persistence})
-      : _persistence = persistence;
+  SettingsController({required SettingsPersistence persistence}) : _persistence = persistence;
 
   /// Asynchronously loads values from the injected persistence store.
   Future<void> loadStateFromPersistence() async {
